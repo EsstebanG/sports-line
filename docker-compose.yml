@@ -1,0 +1,53 @@
+services:
+  app:
+    build: .
+    container_name: sports-line-app
+    restart: always
+    ports:
+      - "3001:3001"
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      - NODE_ENV=development
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=Qwe.123*
+      - DB_NAME=sports_line
+    depends_on:
+      - db
+    networks:
+      - sports-line-network
+    deploy:
+      resources:
+        limits:
+          cpus: "0.75"
+          memory: 512M
+
+  db:
+    image: postgres:15
+    container_name: sports-line-db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Qwe.123*
+      POSTGRES_DB: sports_line
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - sports-line-network
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 512M
+
+volumes:
+  pgdata:
+
+networks:
+  sports-line-network:
+    driver: bridge
