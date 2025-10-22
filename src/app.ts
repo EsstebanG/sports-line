@@ -6,7 +6,9 @@ import express from 'express' // ← Importamos la librería de express para el 
 
 import sequelize from './dbconfig/connection.ts' // ← Importamos nuestra variable de la conexión. / We import our connection variable.
 
-import { router, initRoutes } from './routers/cleaner.ts';
+import { router, initRoutes } from './routers/cleaner.ts'; // ← 
+
+import { router as authRouter } from './routers/auth.ts'; // ← 
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -21,17 +23,21 @@ const PORT = process.env.PORT || 3001 // ← Creamos o usamos una variable donde
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
 
-app.use(express.json()) // ← ←
+app.use(express.json()) // ← 
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
 
 // Middlewares.
-app.use( corsMiddleware ); // ← ← Usamos globalmente nuestro CORS personalizado. / We use our custom CORS globally.
+app.use( corsMiddleware ); // ← Usamos globalmente nuestro CORS personalizado. / We use our custom CORS globally.
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
 
 // Enrutamiento dinamico. 
 await initRoutes();
+
+app.use("/", router); // ← 
+
+app.use('/auth', authRouter); // ← 
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
 
