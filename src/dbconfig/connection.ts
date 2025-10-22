@@ -15,12 +15,12 @@ import { Sequelize } from 'sequelize'
 const sequelize = new Sequelize (
     process.env.DB_NAME || "sports_line",   // ← Nombre de nuestra base de datos. / Name of our database.
     process.env.DB_USER || "postgres",      // ← Usuario de nuestro gestor de base de datos. / User of our database manager.
-    process.env.DB_PASS || "Qwe.123*",      // ← Contraseña de nuestra base de datos. / Password for our database.
+    process.env.DB_PASSWORD || "Qwe.123*",      // ← Contraseña de nuestra base de datos. / Password for our database.
     {
-        host: "localhost",          // ← La dirección del host donde se encuentra PostgreSQL. / The host address where PostgreSQL is located.
-        port: 5432,                 // ← El puerto de nuetsro PostgreSQL. / Our PostgreSQL port.
-        dialect: "postgres",        // ← El dialecto de la base de datos. Aquí estamos usando PostgreSQL. / The database dialect, in this case PostgreSQL.
-        logging: false              // ← Desactivamos los logs para evitar que se impriman los queries de SQL. / We disable logging to avoid printing SQL queries.
+        host: process.env.DB_HOST || "localhost",   // ← La dirección del host donde se encuentra PostgreSQL. / The host address where PostgreSQL is located.
+        port: 5432,                                 // ← El puerto de nuetsro PostgreSQL. / Our PostgreSQL port.
+        dialect: "postgres",                        // ← El dialecto de la base de datos. Aquí estamos usando PostgreSQL. / The database dialect, in this case PostgreSQL.
+        logging: false                              // ← Desactivamos los logs para evitar que se impriman los queries de SQL. / We disable logging to avoid printing SQL queries.
     } 
 );
 
