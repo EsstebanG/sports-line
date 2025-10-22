@@ -4,7 +4,10 @@ import { Router } from 'express'
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
 
 //
-import { loginUsersController } from '../controllers/auth.controller.ts'
+import { loginUsersController, registerUsersController, refreshController, logoutController } from '../controllers/auth.controller.ts';
+
+// Middlewares.
+import { authenticateToken } from '../middlewares/auth.middleware.ts';
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
 
@@ -13,8 +16,11 @@ const router:Router = Router()
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
 
-// Rutas para iniciar sesion y el registro de usuarios. / Routes for logging in and user registration
+// 
 router.post('/login', loginUsersController);
+router.post('/register', registerUsersController);
+router.post('/refresh', refreshController);
+router.post('/logout', authenticateToken, logoutController);
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
 

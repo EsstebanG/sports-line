@@ -15,8 +15,9 @@ export class User extends Model {
     declare email: string;
     declare password: string;
     declare role: string;
-    declare deleted_at: Date;
-    declare created_at: Date
+    declare deleted_at: Date | null;
+    declare created_at: Date;
+    declare refresh_token?: string | null;
 }
 
 // Inicializamos el modelo `User` utilizando el método `init()` de Sequelize. / We initialize the `User` model using Sequelize's `init()` method.
@@ -44,6 +45,10 @@ User.init (
         type: DataTypes.ENUM('admin', 'regular'),
         allowNull: false,
         defaultValue: 'regular'
+    },
+    refresh_token: {
+        type: DataTypes.TEXT,
+        allowNull: true
     },
     deleted_at: {
         type: DataTypes.DATE,
