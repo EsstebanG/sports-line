@@ -58,3 +58,24 @@ INSERT INTO products (name, description, value, stock) VALUES
 ('Laptop', 'Laptop marca XYZ con 16GB RAM y 512GB SSD', 1200.00, 10),
 ('Smartphone', 'Smartphone modelo ABC con cámara de 48MP', 700.00, 25),
 ('Monitor', 'Monitor 24 pulgadas Full HD', 150.00, 30);
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+-- Crear tabla 'orders'. / Create table 'orders'.
+CREATE TABLE orders (
+    id_order SERIAL PRIMARY KEY,
+    id_client INTEGER NOT NULL REFERENCES clients(id_client) ON DELETE CASCADE,
+    total NUMERIC(10,2) NOT NULL CHECK (total >= 0),
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+-- Crear tabla 'order_products'. / Create table 'order_products'.
+CREATE TABLE order_products (
+    id_order INTEGER NOT NULL REFERENCES orders(id_order) ON DELETE CASCADE,
+    id_product INTEGER NOT NULL REFERENCES products(id_product) ON DELETE CASCADE,
+    quantity INTEGER NOT NULL CHECK (quantity > 0),
+    subtotal NUMERIC(10,2) NOT NULL CHECK (subtotal >= 0),
+    PRIMARY KEY (id_order, id_product)
+);
